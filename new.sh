@@ -1,3 +1,6 @@
 touch "Controllers/$1Controller.cs"
+echo "using Microsoft.AspNetCore.Mvc;\n\n[ApiController]\n[Route(\"[controller]\")]\npublic class ClassController : ControllerBase\n{\n}" > "Controllers/$1Controller.cs"
 touch "Interfaces/I$1Repository.cs"
+echo "public interface I$1Repository \n{\n}" > "Interfaces/I$1Repository.cs"
 touch "Repository/$1Repository.cs"
+echo "public class $1Repository : I$1Repository\n{\n}" > "Repository/$1Repository.cs"
