@@ -10,7 +10,10 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<User>().HasKey(_ => _.Id);
     }
+
 
     public override int SaveChanges()
     {
@@ -30,6 +33,6 @@ public class AppDbContext : DbContext
     }
 
 
-
+    public DbSet<User> Users { get; set; }
 
 }

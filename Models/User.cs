@@ -1,4 +1,4 @@
-public class UserRepository : BaseEntity
+public class User : BaseEntity
 {
     public string? fullName { get; set; }
     public string? phoneNumber { get; set; }
