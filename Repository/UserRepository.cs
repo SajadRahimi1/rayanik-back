@@ -1,4 +1,4 @@
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 public class UserRepository : IUserRepository
 {
@@ -74,5 +74,10 @@ public class UserRepository : IUserRepository
         await UpdateUser(user);
         return new CustomActionResult(new Result { Data = "کد با موفقیت ارسال شد" });
 
+    }
+
+    public async Task<CustomActionResult> getAll()
+    {
+        return new CustomActionResult(new Result { Data = await _appDbContext.Users.ToListAsync() });
     }
 }

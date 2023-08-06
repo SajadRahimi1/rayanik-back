@@ -9,6 +9,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddAutoMapper(typeof(Program));
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
@@ -31,7 +33,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var host = new WebHostBuilder().UseUrls("http://192.168.1.7:5063");
+// var host = new WebHostBuilder().UseUrls("http://192.168.1.7:8050");
 
 app.UseAuthorization();
 
