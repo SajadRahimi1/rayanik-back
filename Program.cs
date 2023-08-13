@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,12 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
     options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
 });
 
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 115343360;
+});
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -33,6 +41,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseStaticFiles();
+
+app.UseStaticFiles(new StaticFileOptions()
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"uploads")),
+    RequestPath = new PathString("/uploads")
+});
 
 // app.UseHttpsRedirection();
 

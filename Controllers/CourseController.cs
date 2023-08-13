@@ -15,10 +15,25 @@ public class CourseController : ControllerBase
         _mapper = mapper;
     }
 
+    [HttpGet]
+    public IActionResult getAllCourses()
+    {
+        return _courseRepository.getAllCourses();
+    }
+
     [HttpPost, Route("create")]
     public async Task<IActionResult> createCourse(CreateCoursDto dto)
     {
         var course = _mapper.Map<Course>(dto);
         return await _courseRepository.CreateCourse(course);
     }
+
+    [HttpPost, Route("add-lesson")]
+    [Consumes("multipart/form-data")]
+    [RequestSizeLimit(110 * 1024 * 1024)]
+    public async Task<IActionResult> addLesson([FromForm] AddLessonDto dto)
+    {
+        return await _courseRepository.AddLesson(dto);
+    }
 }
+
