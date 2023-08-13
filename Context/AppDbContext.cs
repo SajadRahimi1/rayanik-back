@@ -12,6 +12,8 @@ public class AppDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<User>().HasKey(_ => _.Id);
+        modelBuilder.Entity<Course>().HasKey(_ => _.Id);
+        modelBuilder.Entity<Lesson>().HasKey(_ => _.Id);
     }
 
 
@@ -34,5 +36,7 @@ public class AppDbContext : DbContext
 
 
     public DbSet<User> Users { get; set; }
+    public DbSet<Course> courses { get; set; }
+    public DbSet<Lesson> lessons { get; set; }
 
 }
