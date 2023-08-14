@@ -12,4 +12,6 @@ public class AddLessonDto
 
     [Required]
     public IFormFile video { get; set; }
+
+    public int weekNumber { get; set; } = 1;
 }

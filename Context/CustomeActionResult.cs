@@ -36,3 +36,10 @@ public class CustomActionResult : IActionResult
         await objectResult.ExecuteResultAsync(context);
     }
 }
+
+public class CustomData
+{
+    public string? message { get; set; }
+    public string? token { get; set; }
+    public object? data { get; set; }
+}

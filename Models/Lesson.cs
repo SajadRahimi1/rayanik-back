@@ -4,4 +4,5 @@ public class Lesson : BaseEntity
     public string? title { get; set; }
     public string? description { get; set; }
     public string? videoUrl { get; set; }
+    public int weekNumber { get; set; }=1;
 }

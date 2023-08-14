@@ -16,9 +16,9 @@ public class CourseController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult getAllCourses()
+    public async Task<IActionResult> getAllCourses()
     {
-        return _courseRepository.getAllCourses();
+        return await _courseRepository.getAllCourses();
     }
 
     [HttpPost, Route("create")]
