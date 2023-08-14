@@ -33,9 +33,10 @@ public class CourseRepository : ICourseRepository
         return new CustomActionResult(new Result { Data = new CustomData { message = "درس با موفقیت اضافه شد", data = createdLesson.Entity } });
     }
 
-    public async Task<CustomActionResult> CreateCourse(Course course)
+    public async Task<CustomActionResult> CreateCourse(CreateCoursDto courseDto)
     {
-        var createdCourse = await _appDbContext.Courses.AddAsync(course);
+        var imageUrl = await _fileRepository.SaveFileAsync(courseDto.image);
+        var createdCourse = await _appDbContext.Courses.AddAsync(new Course { category = courseDto.category, imageUrl = imageUrl, price = courseDto.price, title = courseDto.title });
         await _appDbContext.SaveChangesAsync();
         return new CustomActionResult(new Result { Data = createdCourse });
     }

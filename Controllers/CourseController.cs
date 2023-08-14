@@ -24,8 +24,7 @@ public class CourseController : ControllerBase
     [HttpPost, Route("create")]
     public async Task<IActionResult> createCourse(CreateCoursDto dto)
     {
-        var course = _mapper.Map<Course>(dto);
-        return await _courseRepository.CreateCourse(course);
+        return await _courseRepository.CreateCourse(dto);
     }
 
     [HttpPost, Route("add-lesson")]

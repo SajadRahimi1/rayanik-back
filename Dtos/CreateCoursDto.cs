@@ -15,4 +15,7 @@ public class CreateCoursDto
 
     public int weeksCount { get; set; } = 1;
 
+    [Required]
+    public IFormFile image { get; set; }
+
 }

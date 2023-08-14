@@ -1,6 +1,6 @@
 public interface ICourseRepository
 {
-    Task<CustomActionResult> CreateCourse(Course course);
+    Task<CustomActionResult> CreateCourse(CreateCoursDto courseDto);
     Task<CustomActionResult> EditCourse();
     Task<CustomActionResult> AddLesson(AddLessonDto lessonDto);
     Task<CustomActionResult> getAllCourses();
