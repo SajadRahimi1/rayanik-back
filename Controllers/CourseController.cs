@@ -22,6 +22,8 @@ public class CourseController : ControllerBase
     }
 
     [HttpPost, Route("create")]
+    [Consumes("multipart/form-data")]
+    [RequestSizeLimit(1024 * 1024)]
     public async Task<IActionResult> createCourse(CreateCoursDto dto)
     {
         return await _courseRepository.CreateCourse(dto);

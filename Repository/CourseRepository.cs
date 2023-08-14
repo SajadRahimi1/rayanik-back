@@ -20,6 +20,8 @@ public class CourseRepository : ICourseRepository
             return new CustomActionResult(new Result { ErrorMessage = new ErrorModel { ErrorMessage = "دوره ای با این ای دی یافت نشد" }, statusCodes = 404 });
         }
 
+        var imageUrl = await _fileRepository.SaveFileAsync(lessonDto.image);
+
         var videoUrl = await _fileRepository.SaveFileAsync(lessonDto.video);
         if (course.price != null)
         {
@@ -27,7 +29,7 @@ public class CourseRepository : ICourseRepository
             _fileRepository.DeleteFile(videoUrl);
         }
 
-        Lesson lesson = new Lesson { courseId = lessonDto.courseId, description = lessonDto.description, title = lessonDto.title, videoUrl = videoUrl + ".bin" };
+        Lesson lesson = new Lesson { courseId = lessonDto.courseId, description = lessonDto.description, title = lessonDto.title, videoUrl = videoUrl + ".bin", imageUrl = imageUrl };
         var createdLesson = await _appDbContext.Lessons.AddAsync(lesson);
         await _appDbContext.SaveChangesAsync();
         return new CustomActionResult(new Result { Data = new CustomData { message = "درس با موفقیت اضافه شد", data = createdLesson.Entity } });
