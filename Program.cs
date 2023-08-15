@@ -33,6 +33,11 @@ builder.Services.Configure<FormOptions>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
+    {
+        builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+    }));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -49,8 +54,9 @@ app.UseStaticFiles(new StaticFileOptions()
     RequestPath = new PathString("/uploads")
 });
 
-// app.UseHttpsRedirection();
+app.UseCors("ApiCorsPolicy");
 
+// app.UseHttpsRedirection();
 var host = new WebHostBuilder().UseUrls("http://192.168.1.3:8050");
 
 app.UseAuthorization();

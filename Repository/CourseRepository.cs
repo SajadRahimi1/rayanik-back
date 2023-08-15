@@ -38,9 +38,9 @@ public class CourseRepository : ICourseRepository
     public async Task<CustomActionResult> CreateCourse(CreateCoursDto courseDto)
     {
         var imageUrl = await _fileRepository.SaveFileAsync(courseDto.image);
-        var createdCourse = await _appDbContext.Courses.AddAsync(new Course { category = courseDto.category, imageUrl = imageUrl, price = courseDto.price, title = courseDto.title });
+        var createdCourse = await _appDbContext.Courses.AddAsync(new Course { category = courseDto.category, imageUrl = imageUrl, price = courseDto.price, title = courseDto.title, weeksCount = courseDto.weeksCount });
         await _appDbContext.SaveChangesAsync();
-        return new CustomActionResult(new Result { Data = createdCourse });
+        return new CustomActionResult(new Result { Data = createdCourse.Entity });
     }
 
     public Task<CustomActionResult> EditCourse()
