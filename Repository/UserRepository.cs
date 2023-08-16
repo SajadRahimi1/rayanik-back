@@ -80,4 +80,28 @@ public class UserRepository : IUserRepository
     {
         return new CustomActionResult(new Result { Data = await _appDbContext.Users.ToListAsync() });
     }
+
+    public async Task<CustomActionResult> buyCourse(string userId, string courseId)
+    {
+        var user = await _appDbContext.Users.SingleOrDefaultAsync(_ => _.Id == Guid.Parse(userId));
+        if (user == null)
+        {
+            return new CustomActionResult(new Result { ErrorMessage = new ErrorModel { ErrorMessage = "کاربر یافت نشد" }, statusCodes = 404 });
+        }
+        var course = await _appDbContext.Courses.SingleOrDefaultAsync(_ => _.Id == Guid.Parse(courseId));
+        if (course == null)
+        {
+            return new CustomActionResult(new Result { ErrorMessage = new ErrorModel { ErrorMessage = "دوره یافت نشد" }, statusCodes = 404 });
+        }
+        user.courses.Add(course);
+        return await updateUser(user);
+    }
+
+    public async Task<CustomActionResult> updateUser(User user)
+    {
+        var newUser = _appDbContext.Users.Update(user);
+        await _appDbContext.SaveChangesAsync();
+        return new CustomActionResult(new Result { Data = newUser.Entity });
+    }
+
 }

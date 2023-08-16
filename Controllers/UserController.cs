@@ -28,4 +28,10 @@ public class UserController : ControllerBase
     {
         return await _userRepository.getAll();
     }
+
+    [HttpPost, Route("buy-course")]
+    public async Task<IActionResult> butCourse(string id, string courseId)
+    {
+        return await _userRepository.buyCourse(id, courseId);
+    }
 }

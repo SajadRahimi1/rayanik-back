@@ -12,11 +12,10 @@ public class AppDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<User>().HasKey(_ => _.Id);
+        modelBuilder.Entity<User>().HasMany(_=>_.courses);
         modelBuilder.Entity<Course>().HasKey(_ => _.Id);
         modelBuilder.Entity<Course>().Property(_ => _.category).HasConversion<string>();
         modelBuilder.Entity<Lesson>().HasKey(_ => _.Id);
-
-
     }
 
 
@@ -41,5 +40,6 @@ public class AppDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Course> Courses { get; set; }
     public DbSet<Lesson> Lessons { get; set; }
+
 
 }
