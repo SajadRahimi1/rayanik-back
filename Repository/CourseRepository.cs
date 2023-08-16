@@ -23,13 +23,15 @@ public class CourseRepository : ICourseRepository
         var imageUrl = await _fileRepository.SaveFileAsync(lessonDto.image);
 
         var videoUrl = await _fileRepository.SaveFileAsync(lessonDto.video);
-        if (course.price != null)
+
+        if (course.price != null || course.price == "")
         {
             FileEncryption.EncryptFileWithKey("uploads/" + videoUrl, "uploads/" + videoUrl + ".bin", course.Id);
             _fileRepository.DeleteFile(videoUrl);
+            videoUrl = videoUrl + ".bin";
         }
 
-        Lesson lesson = new Lesson { courseId = lessonDto.courseId, description = lessonDto.description, title = lessonDto.title, videoUrl = videoUrl + ".bin", imageUrl = imageUrl };
+        Lesson lesson = new Lesson { courseId = lessonDto.courseId, description = lessonDto.description, title = lessonDto.title, videoUrl = videoUrl, imageUrl = imageUrl };
         var createdLesson = await _appDbContext.Lessons.AddAsync(lesson);
         await _appDbContext.SaveChangesAsync();
         return new CustomActionResult(new Result { Data = new CustomData { message = "درس با موفقیت اضافه شد", data = createdLesson.Entity } });
