@@ -11,6 +11,12 @@ public class BookController : ControllerBase
         _bookRepository = bookRepository;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> getAllBooks()
+    {
+        return await _bookRepository.getAllBooks();
+    }
+
     [HttpPost, Route("create")]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> createBook([FromForm] AddBookDto dto)

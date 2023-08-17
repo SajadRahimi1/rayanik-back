@@ -32,7 +32,7 @@ public class BookRepository : IBookRepository
         throw new NotImplementedException();
     }
 
-    public async Task<CustomActionResult> getAllBook()
+    public async Task<CustomActionResult> getAllBooks()
     {
         var books = await _appDbContext.Books.ToListAsync();
         return new CustomActionResult(new Result { Data = books });
