@@ -6,6 +6,7 @@ public class AppMapper:Profile
     {
         CreateMap<CreateCoursDto,Course>();
         CreateMap<AddLessonDto,Lesson>();
+        CreateMap<AddBookDto,Book>();
     }
     
 }

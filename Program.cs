@@ -14,6 +14,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<IFileRepository, FileRepository>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllers().AddNewtonsoftJson(options =>

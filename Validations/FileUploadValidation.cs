@@ -12,12 +12,12 @@ public class ValidatePdfAttribute : ValidationAttribute
         }
 
         var extension = Path.GetExtension(file.FileName).ToLower();
-        if (extension != "pdf")
+        if (extension == ".pdf")
         {
-            return new ValidationResult("only pdf files are allowed");
+            return ValidationResult.Success;
         }
+        return new ValidationResult("only pdf files are allowed");
 
-        return ValidationResult.Success;
     }
 }
 
@@ -33,12 +33,12 @@ public class ValidateImageAttribute : ValidationAttribute
         }
 
         var extension = Path.GetExtension(file.FileName).ToLower();
-        if (extension != "jpg" || extension != "jpeg" || extension != "png")
+        if (extension == ".jpg" || extension == ".jpeg" || extension == ".png")
         {
-            return new ValidationResult("only pdf files are allowed");
+            return ValidationResult.Success;
         }
 
-        return ValidationResult.Success;
+        return new ValidationResult("jpg or jpeg or png files are allowed");
     }
 }
 
@@ -54,11 +54,11 @@ public class ValidateVideoAttribute : ValidationAttribute
         }
 
         var extension = Path.GetExtension(file.FileName).ToLower();
-        if (extension != "mp4")
+        if (extension == ".mp4")
         {
-            return new ValidationResult("only pdf files are allowed");
+            return ValidationResult.Success;
         }
 
-        return ValidationResult.Success;
+        return new ValidationResult("only mp4 files are allowed");
     }
 }

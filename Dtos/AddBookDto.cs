@@ -14,12 +14,12 @@ public class AddBookDto
 
     [Required]
     [ValidatePdf]
-    public IFormFile? pdf { get; set; }
+    public IFormFile pdf { get; set; }
     public string? description { get; set; }
 
     [Required]
     [ValidateImage]
-    public IFormFile? image { get; set; }
+    public IFormFile image { get; set; }
 
     public string? downloadUrl { get; set; }
     public string? imageUrl { get; set; }

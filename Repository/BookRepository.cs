@@ -1,20 +1,30 @@
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+
 
 public class BookRepository : IBookRepository
 {
     private readonly AppDbContext _appDbContext;
     private readonly IFileRepository _fileRepository;
+    private readonly IMapper _mapper;
 
-    public BookRepository(AppDbContext appDbContext,IFileRepository fileRepository)
+    public BookRepository(AppDbContext appDbContext, IFileRepository fileRepository, IMapper mapper)
     {
         _appDbContext = appDbContext;
-        _fileRepository=fileRepository;
+        _fileRepository = fileRepository;
+        _mapper = mapper;
     }
 
 
-    public Task<CustomActionResult> addBook()
+    public async Task<CustomActionResult> addBook(AddBookDto addBookDto)
     {
-        throw new NotImplementedException();
+        var pdfUrl = await _fileRepository.SaveFileAsync(addBookDto.pdf);
+        var imageUrl = await _fileRepository.SaveFileAsync(addBookDto.image);
+        addBookDto.downloadUrl = pdfUrl;
+        addBookDto.imageUrl = imageUrl;
+        var createdBook = await _appDbContext.Books.AddAsync(_mapper.Map<Book>(addBookDto));
+        await _appDbContext.SaveChangesAsync();
+        return new CustomActionResult(new Result { Data = createdBook.Entity });
     }
 
     public Task<CustomActionResult> editBook()
@@ -25,6 +35,6 @@ public class BookRepository : IBookRepository
     public async Task<CustomActionResult> getAllBook()
     {
         var books = await _appDbContext.Books.ToListAsync();
-        return new CustomActionResult(new Result{Data=books});
+        return new CustomActionResult(new Result { Data = books });
     }
 }
