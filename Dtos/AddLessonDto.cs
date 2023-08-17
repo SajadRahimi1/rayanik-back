@@ -11,10 +11,12 @@ public class AddLessonDto
     public string? description { get; set; }
 
     [Required]
-    public IFormFile video { get; set; }
+    [ValidateVideo]
+    public IFormFile? video { get; set; }
 
     [Required]
-    public IFormFile image { get; set; }
+    [ValidateImage]
+    public IFormFile? image { get; set; }
 
     public int weekNumber { get; set; } = 1;
 }
