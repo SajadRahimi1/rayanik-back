@@ -8,7 +8,8 @@ public class ValidatePdfAttribute : ValidationAttribute
         var file = value as IFormFile;
         if (file == null)
         {
-            return new ValidationResult("file can't be null");
+            // return new ValidationResult("file can't be null");
+            return ValidationResult.Success;
         }
 
         var extension = Path.GetExtension(file.FileName).ToLower();
@@ -29,7 +30,8 @@ public class ValidateImageAttribute : ValidationAttribute
         var file = value as IFormFile;
         if (file == null)
         {
-            return new ValidationResult("file can't be null");
+            // return new ValidationResult("file can't be null");
+            return ValidationResult.Success;
         }
 
         var extension = Path.GetExtension(file.FileName).ToLower();

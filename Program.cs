@@ -58,7 +58,7 @@ app.UseStaticFiles(new StaticFileOptions()
 app.UseCors("ApiCorsPolicy");
 
 // app.UseHttpsRedirection();
-var host = new WebHostBuilder().UseUrls("http://192.168.1.3:8050");
+var host = new WebHostBuilder().UseUrls("http://192.168.1.8:8050");
 
 app.UseAuthorization();
 

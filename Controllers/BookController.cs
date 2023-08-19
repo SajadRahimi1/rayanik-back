@@ -23,4 +23,11 @@ public class BookController : ControllerBase
     {
         return await _bookRepository.addBook(dto);
     }
+
+    [HttpPost, Route("edit")]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> editBook([FromForm] EditBookDto dto)
+    {
+        return await _bookRepository.editBook(dto);
+    }
 }

@@ -27,9 +27,42 @@ public class BookRepository : IBookRepository
         return new CustomActionResult(new Result { Data = createdBook.Entity });
     }
 
-    public Task<CustomActionResult> editBook()
+    public async Task<CustomActionResult> editBook(EditBookDto editBookDto)
     {
-        throw new NotImplementedException();
+        var book = await _appDbContext.Books.SingleOrDefaultAsync(_ => _.Id == editBookDto.Id);
+        if (book == null)
+        {
+            return new CustomActionResult(new Result { ErrorMessage = new ErrorModel { ErrorMessage = "کتاب یافت نشد" }, statusCodes = 404 });
+        }
+
+        if (editBookDto.image == null)
+        {
+            editBookDto.imageUrl = book.imageUrl;
+        }
+        else
+        {
+            var imageUrl = await _fileRepository.SaveFileAsync(editBookDto.image);
+            editBookDto.imageUrl = imageUrl;
+            _fileRepository.DeleteFile(book.imageUrl);
+        }
+
+
+        if (editBookDto.pdf == null)
+        {
+            editBookDto.downloadUrl = book.downloadUrl;
+        }
+        else
+        {
+            var pdfUrl = await _fileRepository.SaveFileAsync(editBookDto.pdf);
+            editBookDto.downloadUrl = pdfUrl;
+            _fileRepository.DeleteFile(book.downloadUrl);
+        }
+        var mapBook = _mapper.Map<Book>(editBookDto);
+        _appDbContext.ChangeTracker.Clear();
+        var editedBook = _appDbContext.Books.Update(mapBook);
+        await _appDbContext.SaveChangesAsync();
+        return new CustomActionResult(new Result { Data = editedBook.Entity });
+
     }
 
     public async Task<CustomActionResult> getAllBooks()
